@@ -10,13 +10,13 @@ header{
     height:60px;
     background-color:#333;
 }
-.header-logo{
+
+.header-logo img{
     float:left;
-    width:127px;
-    height:46px;
-    margin-top:5px;
+    width:120px;
+    height:40px;
+    margin-top:10px;
     margin-left:30px;
-    background:url(../images/baidu-logo.jpg);
 }
 header .nav li{
     float:right;
