@@ -1,0 +1,174 @@
+/*重置*/
+body,div,ul,li,h1,h2,h3,h4,h5,h6,p,a,table,tr,td,th{
+    margin:0;
+    padding:0;
+    font-family: "黑体";
+}
+
+body{
+    background-color:#c0c0c0;
+}
+div{
+    background-color:#fff;
+}
+.main-con{
+    float:left;
+    margin-right: 480px;
+    background-color:#c0c0c0;
+}
+
+
+/*导航栏*/
+header{
+    height:60px;
+    background-color:#333;
+    width:100%;
+}
+
+.header-logo img{
+    float:left;
+    width:120px;
+    height:40px;
+    margin-top:10px;
+    margin-left:30px;
+}
+header .nav li{
+    float:right;
+    margin-right:20px;
+    line-height:60px;
+    color:black;
+}
+header .nav a{
+    color:white;
+    text-decoration: none;
+}
+header .nav .header-link4{
+    color:#808080;
+}
+
+
+/*文章*/
+h2{
+    margin:10px 0;
+    color:#242424;
+}
+h3{
+    margin:10px 0;
+    color:#4b4b4b;
+}
+h4{
+    margin:10px 0;
+    color:#646464;
+}
+.article{
+    float:left;
+    padding:30px 18px;
+    margin:25px 0 2% 2%;
+    line-height:24px;
+    box-shadow: 2px 2px #666;
+}
+.article .article-list{
+    list-style: none;
+    margin:10px 0px 30px 30px;
+}
+.article .picture{
+    margin:0;
+}
+
+/*十张图片文章*/
+.article .nice-pic{
+
+    float:left;
+    width:126px;
+    height:126px;
+    margin:10px 0 10px 10px;
+    border:1px solid #c0c0c0;
+
+}
+.article .nice-pic p{
+    font-size:11px;
+    text-align: center;
+    line-height:38px;
+}
+.article .nice-pic img{
+    width:80px;
+    height:70px;
+    margin:3px 23px;
+}
+
+/*表格*/
+.article-table{
+    border-collapse: collapse;
+}
+.article-table th{
+    width:400px;
+    background-color: #242424;
+    color:white;
+}
+.article-table td{
+    border-bottom: 1px solid #c0c0c0;
+    border-left: 1px solid #c0c0c0;
+}
+.article-table .opera{
+    border-right:1px solid #c0c0c0;
+}
+
+.article-table .total{
+    background-color: #c0c0c0;
+}
+/*侧栏*/
+.sidebar{
+    padding:20px;
+    margin:25px 2% 2% 0;
+    margin-left: -450px;
+    float:left;
+    width:380px;
+    box-shadow: 2px 2px #666;
+
+}
+.sidebar h2{
+    padding:5px;
+    border-left: 4px solid #c0c0c0;
+}
+.sidebar p{
+    line-height: 40px;
+    font-size:14px;
+}
+.sidebar .remind{
+    color:#c0c0c0;
+}
+.sidebar .left-div{
+    width:39%;
+    float:left;
+    text-align: right;
+}
+.sidebar .right-div{
+    width:59%;
+    float:right;
+}
+.sidebar textarea{
+    margin-top:10px;
+    width:100%;
+}
+.sidebar button{
+    font-size:14px;
+    font-weight: bold;
+    height:46px;
+    width:98%;
+    background:#3366ff ;
+    color:white;
+    text-align: center;
+    border-radius: 10px;
+}
+
+
+/*页脚*/
+footer{
+    float:left;
+    width:100%;
+    height:80px;
+    line-height: 80px;
+    text-align: center;
+    background-color:#000;
+    color:white;
+}
