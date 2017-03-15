@@ -74,6 +74,9 @@ h4{
 .article .picture{
     margin:0;
 }
+.art-img img{
+    width:40%;
+}
 
 /*十张图片文章*/
 .article .nice-pic{
