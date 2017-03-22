@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFE JavaScript Task 04</title>
+    <style>
+        span{
+            background-color: #ff0000;
+            font-size:20px;
+            padding: 5px;
+            margin:0 5px;
+            color:#ffffff;
+        }
+    </style>
+</head>
+<body>
+<input type="text" name="insert" />
+<button id="left-ins">左侧入</button>
+<button id="right-ins">右侧入</button>&nbsp;&nbsp;
+<button id="left-out">左侧出</button>
+<button id="right-out">右测出</button>
+<p><span>10</span><span>3</span><span>7</span><span>12</span><span>11</span><span>30</span></p>
+
+<script>
+        //获取button和p元素
+        var leftIns = document.getElementById("left-ins"),
+            rightIns = document.getElementById("right-ins"),
+            leftOut = document.getElementById("left-out"),
+            rightOut = document.getElementById("right-out"),
+            pCon = document.getElementsByTagName("p")[0];
+            spans = document.getElementsByTagName("span");
+
+
+
+    //将input框里的内容添加到新的span
+    function assign() {
+        var inputCon = document.getElementsByTagName("input")[0].value;
+        newSpan=document.createElement("span");
+        textnode=document.createTextNode(inputCon);
+        newSpan.appendChild(textnode);
+        if(inputCon==""){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+    //构造insertAfter元素
+    function insertAfter(newElement, targetElement){
+        var parent = targetElement.parentNode;
+        if (parent.lastChild == targetElement) {// 如果最后的节点是目标元素，则直接添加。因为默认是最后
+            parent.appendChild(newElement);
+        }
+        else {
+            parent.insertBefore(newElement, targetElement.nextSibling);//如果不是，则插入在目标元素的下一个兄弟节点的前面，也就是目标元素的后面
+        }
+    }
+
+        //循环遍历队列中的每个元素,被点击后删除
+        function del() {
+            for(var i=0;i<spans.length;i++){
+                spans[i].onclick = function () {
+                    this.parentNode.removeChild(this);
+                }
+            }
+        }
+
+    function init() {
+
+        //左侧入 将span插入p元素起始位置
+        leftIns.onclick=function () {
+            if(assign()){
+                pCon.insertBefore(newSpan,pCon.childNodes[0]);
+                del();
+            }
+
+        }
+        //右侧入 将span插到p元素最后
+        rightIns.onclick=function () {
+            if(assign()){
+                insertAfter(newSpan,pCon.lastChild);
+                del();
+            }
+        }
+        //从左侧删除元素
+        leftOut.onclick=function () {
+            if(pCon.childNodes[0]){
+                alert(pCon.childNodes[0].innerHTML);
+                pCon.removeChild(pCon.childNodes[0]);
+            }
+
+        }
+        //从右侧开始删除元素
+        rightOut.onclick=function () {
+            if(pCon.lastChild){
+                alert(pCon.lastChild.innerHTML);
+                pCon.removeChild(pCon.lastChild);
+            }
+        }
+
+
+    }
+    init();
+</script>
+</body>
+</html>
