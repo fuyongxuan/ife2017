@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFE JavaScript Task 05</title>
+    <style>
+        span{
+            display: inline-block;
+            width:20px;
+            background-color: #ff0000;
+            margin:0 1px;
+            color:#ffffff;
+        }
+    </style>
+</head>
+<body>
+<input type="text" name="insert" />
+<button id="left-ins">左侧入</button>
+<button id="right-ins">右侧入</button>&nbsp;&nbsp;
+<button id="left-out">左侧出</button>
+<button id="right-out">右测出</button>
+<p><span>90</span><span>80</span><span>70</span><span>60</span><span>50</span><span>40</span><span>30</span></p>
+<button class="sort" value="bubble">冒泡</button>
+<button class="sort" value="select">选择</button>
+<button class="sort" value="quick">快速</button>
+
+<script>
+    //获取button和p元素
+    var leftIns = document.getElementById("left-ins"),
+            rightIns = document.getElementById("right-ins"),
+            leftOut = document.getElementById("left-out"),
+            rightOut = document.getElementById("right-out"),
+            pCon = document.getElementsByTagName("p")[0],
+            spans = document.getElementsByTagName("span"),
+            btn_sort = document.getElementsByClassName("sort");
+
+    //将input框里的内容添加到新的span
+    function assign() {
+        var inputCon = document.getElementsByTagName("input")[0].value;
+        inputNum = parseInt(inputCon);
+        newSpan=document.createElement("span");
+        textnode=document.createTextNode(inputCon);
+        newSpan.appendChild(textnode);
+        if(inputCon==""){
+            return false;
+        }else if(inputNum<10||inputNum>100){
+            alert("请输入10-100间的数");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    //循环遍历队列中的每个元素,被点击后删除
+    function del() {
+        for(var i=0;i<spans.length;i++){
+            spans[i].onclick = function () {
+                this.parentNode.removeChild(this);
+            }
+        }
+    }
+
+    //构造insertAfter元素
+    function insertAfter(newElement, targetElement){
+        var parent = targetElement.parentNode;
+        if (parent.lastChild == targetElement) {// 如果最后的节点是目标元素，则直接添加。因为默认是最后
+            parent.appendChild(newElement);
+        }
+        else {
+            parent.insertBefore(newElement, targetElement.nextSibling);//如果不是，则插入在目标元素的下一个兄弟节点的前面，也就是目标元素的后面
+        }
+    }
+
+    //将每一趟中的每一次比较都渲染到页面中
+    function render(state,count1){
+        //渲染计数器,初始值为0
+        var count2 = 0;
+        var spans = pCon.getElementsByTagName('span');
+        var s = state.shift() || [];
+        //循环遍历span元素,给每一个span的高度分别设置为第i次比较后每一项的值
+        for(var i = 0; i < spans.length; i++){
+            spans[i].style.height = s[i]+"px";
+        }
+        //渲染计数器,每次渲染就加一
+        count2++;
+        if(count2 == count1){
+            clearInterval(timer);
+        }
+    }
+
+    //排序
+    //冒泡排序(升序),将第i趟的第arr.length - i - 1次的比较结果都存放到state数组中
+    function bub_sort(arr){
+        //state数组,存放每一次比较的结果
+        var state = [];
+        //冒泡计数器,存放比较的总次数
+        var count1 = 0;
+        for(var i = 0; i < arr.length -1 ; i++){
+            for(var j = 0; j < arr.length - i - 1; j++){
+                if(arr[j] > arr[j+1]){
+                    var temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                    count1++;
+                    state.push(arr.slice(0));
+                }
+            }
+        }
+        return [state,count1];
+    }
+    //选择排序
+    function sele_sort(arr) {
+        var state = [];
+        var count1=0;
+        for(var i=0;i<arr.length-1;i++){
+            var temp=0;
+            var index=i;
+            for(var j=i+1;j<spans.length;j++){
+                if(arr[j]<arr[index]){
+                    index = j;
+                }
+            }
+            temp = arr[i];
+            arr[i]=arr[index];
+            arr[index]=temp;
+            count1++;
+            state.push(arr.slice(0));
+        }
+        return [state,count1];
+    }
+    //快速排序
+    function qui_sort(arr) {
+        var l=0;
+
+        var r=spans.length-1;
+        var state = [];
+        var count1=0;
+        //快速排序主要函数
+        function temp(data,l,r) {
+            if (l < r)
+            {
+                var i = l, j = r, x = data[l];
+                while (i < j) {
+                    while (i < j && data[j] >= x) // 从右向左找第一个小于x的数
+                        j--;
+                    if (i < j)
+                        data[i++] = data[j];
+
+                    while (i < j && data[i] < x) // 从左向右找第一个大于等于x的数
+                        i++;
+                    if (i < j)
+                        data[j--] = data[i];
+                }
+                data[i] = x;
+                count1++;
+                state.push(data.slice(0));
+                temp(data, l, i - 1); // 递归调用
+                temp(data, i + 1, r);
+            }
+        }
+        temp(arr,l,r);
+        return [state,count1];
+    }
+
+
+    //主函数
+    function init() {
+        //var spanInner;
+        //左侧入 将span插入p元素起始位置
+        leftIns.onclick=function () {
+            if(assign()){
+                if(spans.length >= 59){
+                    alert("元素数量最多为60个");
+                }else{
+                    pCon.insertBefore(newSpan,pCon.childNodes[0]);
+                    del();
+                    newSpan.style.height=inputNum+"px";
+                    newSpan.innerHTML="";
+                }
+
+            }
+
+        }
+        //右侧入 将span插到p元素最后
+        rightIns.onclick=function () {
+            if(assign()){
+                if(spans.length >= 59){
+                    alert("元素数量最多为60个");
+                }else{
+                    insertAfter(newSpan,pCon.lastChild);
+                    del();
+                    newSpan.style.height=inputNum+"px";
+                    newSpan.innerHTML="";
+                }
+            }
+        }
+        //从左侧删除元素
+        leftOut.onclick=function () {
+            if(pCon.childNodes[0]){
+                //alert(pCon.childNodes[0].innerHTML);
+                pCon.removeChild(pCon.childNodes[0]);
+            }
+        }
+        //从右侧开始删除元素
+        rightOut.onclick=function () {
+            if(pCon.lastChild){
+                //alert(pCon.lastChild.innerHTML);
+                pCon.removeChild(pCon.lastChild);
+            }
+        }
+        //循环遍历队列中的每个元素,被点击后删除
+        for(var i=0;i<spans.length;i++){
+            assign();
+            spans[i].style.height=parseInt(spans[i].innerHTML)+"px";
+            spans[i].innerHTML="";
+            spans[i].onclick = function () {
+                this.parentNode.removeChild(this);
+            }
+        }
+
+        //触发排序按钮，判断value是bubble/select/quick,执行对应的函数
+        for(var t=0;t<btn_sort.length;t++){
+            btn_sort[t].onclick=function () {
+                var spans = pCon.getElementsByTagName('span');
+                var arr = [];
+                for (var i = 0; i < spans.length; i++) {
+                    arr.push(parseInt(spans[i].style.height));
+                }
+                if(this.value=="bubble"){
+                    var p = bub_sort(arr);
+                }else if(this.value=="select"){
+                    var p = sele_sort(arr);
+                }else{
+                    var p = qui_sort(arr);
+                }
+                timer = setInterval(function () {
+                    render(p[0], p[1]);
+                }, 500);
+            }
+        }
+    }
+    init();
+</script>
+</body>
+</html>
